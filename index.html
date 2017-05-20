@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DECINIC | STORY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="StyleFull.css" media="screen and (min-width: 1025px)">
+    <link rel="stylesheet" type="text/css" href="Style1024.css" media="screen and (max-width: 1024px) and (min-width: 769px)">
+    <link rel="stylesheet" type="text/css" href="StylePhone.css" media="screen and (max-width: 768px)">
+    <script>
+        var y = 0;
+        var count = 1,
+            c = 0;
+        var flag = true,
+            isPara = true;
+        var id, idscroll;
+        var patternName = /^[a-zA-Z]+([a-zA-Z\s]+)*$/;
+        var patternPhone = /^[0-9]{10,11}$/;
+        var patternEmail = /^[a-zA-Z0-9]+[@][a-zA-Z]+[.][a-z]+([.][a-z]+)*$/;
+        function control(){
+            setInfor();
+            if (isPara) {
+                para();
+                navColor();   
+            } else {
+                paraPhone();
+            }
+        }
+        function setControl(){
+            if (innerWidth <= 768){
+                isPara = false;
+            } else {
+                isPara = true;
+            }
+            
+        }
+        function para() {
+            y = window.pageYOffset;
+            paraV("logosword", 70, 0, 0, 450);
+            paraVRev("equi2", 0, 50, 600, 1000);
+            paraVRev("equi1", 0, 40, 650, 1000);
+            paraV("story1", 100, 50, 600, 1200);
+            paraV("story2", 10, 50, 600, 1200);
+            paraV("story4", 90, 50, 600, 1200);
+            paraV("story5", 0, 50, 600, 1200);
+            paraHLeft("mikasa1", 40, 0, 1100, 2000);
+            paraHLeft("mikasa2", 40, 0, 1100, 2000);
+            paraHRight("Action1", 0, 10, 1200, 2000);
+            paraHRight("Action2", 0, 10, 1200, 2000);
+            if (y >= 2000 && flag) {
+                flag = false;
+                situRun(1);
+                document.getElementById("situ5").style.width = "200px";
+            }
+            paraV("a2-2", 10, 90, 2300, 3500);
+            //            paraV("a2-1", 20, 80, 2300, 3500);
+            //            paraV("a2-3", 20, 80, 2300, 3500);
+            paraVRev("a5-2", 10, -10, 3500, 4600);
+            diskRun(90, 0, 4000, 5200);
+        }
+        function paraPhone() {
+            y = window.pageYOffset;
+            paraV("logosword", 70, 0, 0, 150);
+            paraVRev("equi2", 0, 50, 0, 300);
+            paraVRev("equi1", 0, 40, 0, 300);
+            paraV("story1", 50, 80, 0, 600);
+            paraV("story2", 50, 30, 0, 600);
+            paraV("story4", 50, 70, 0, 600);
+            paraV("story5", 50, 20, 0, 600);
+            paraHLeft("mikasa1", 40, 0, 300, 1100);
+            paraHLeft("mikasa2", 40, 0, 300, 1100);
+            paraHRight("Action1", 0, 10, 300, 1100);
+            paraHRight("Action2", 0, 10, 300, 1100);
+        }
+//cart
+        function setInfor() {
+            if (localStorage.getItem("quantity") == null || localStorage.getItem("quantity") == "undefined")
+                localStorage.setItem("quantity", 0);
+        }
+
+        function add(code, name, picture, cost, height, width, scale, weight) {
+            if (find(code) == -1) {
+                var q = localStorage.getItem("quantity");
+                q++;
+                localStorage.setItem("quantity", q);
+                localStorage.setItem(q, code + "-" + name + "-" + picture + "-" + cost + "-1-" + height + "-" + width + "-" + scale + "-" + weight);
+                snackbarShow("Add successful!");
+            } else {
+                snackbarShow("You had add this item!");
+            }
+        }
+        function find(code) {
+            var q = localStorage.getItem("quantity");
+            for (var i = 1; i <= q; i++) {
+                var tmp = localStorage.getItem(i);
+                if (tmp != null && tmp != "undefined") {
+                    if (tmp.match("^" + code + "-") != null)
+                        return i;
+                }
+            }
+            return -1;
+        }
+        function cartOpen() {
+            var totalCost = 0;
+            var s = '';
+            var money = 0;
+            var q = localStorage.getItem("quantity");
+            backRun();
+            for (var i = 1; i <= q; i++) {
+                var tmp = localStorage.getItem(i);
+                if (tmp != null && tmp != "undefined") {
+                    var arr = tmp.split("-");
+                    s += '<div class="containClose" id="con' + arr[0] +'">';
+                    s += "<div class='li' onclick='detailRun(\"" + arr[0] + "\")'>";
+                    s += '<div class="tdetail" id="' + arr[0] + '">';
+                    s += '<h2>' + arr[1] + '</h2>';
+                    s += '<hr/><br/>';
+                    if (arr[0] == "d001") {
+                        s += '<p>This disk only run on PS4, PS3, xBox360 and PC</p>';
+                    } else {
+                        s += '<p>Height: ' + arr[5] + 'mm</p>';
+                        s += '<p>Width: ' + arr[6] + 'mm</p>';
+                        s += '<p>Scale: ' + arr[7] + '</p>';
+                        s += '<p>Weight: ' + arr[8] + '</p>';
+                    }
+                    s += '<div class="cancel" onclick="removeProduct(\'' + arr[0] + '\')"></div></div>';
+                    s += '<div class="t"><div class="tthum">';
+                    s += '<img src="' + arr[2] + '" class="t1"/>';
+                    s += '<img src="Image/Detail.png" class="t2">';
+                    s += '</div><h1>' + arr[3] + '$</h1></div></div>';
+                    s += '<div class="number">';
+                    s += '<input type="number" value="' + arr[4] + '" min="1" max="5" onchange="update(\'' + arr[0] + '\', this)"/>';
+                    s += '</div></div>';
+                    totalCost += arr[3] * arr[4];
+                }
+            }
+
+            document.getElementById("c3ul").innerHTML = s;
+            document.getElementById("c4-2").innerHTML = totalCost.toFixed(2) + "$";
+            document.getElementById("c").style.display = "block";
+        }
+        function update(code, tag){
+            if (tag.value > 5 || tag.value < 1) {
+                tag.value = 1;
+            }
+            tag.value = Math.round(tag.value);
+            var i = find(code);
+            if (i != -1){
+                var tmp = localStorage.getItem(i);
+                if (tmp != null || tmp != "undefined") {
+                    var arr = tmp.split("-");
+                    arr[4] = tag.value;
+                    localStorage.setItem(i, arr[0] + "-" + arr[1] + "-" + arr[2] + "-" + arr[3] + "-" + arr[4] + "-" + arr[5] + "-" + arr[6] + "-" + arr[7] + "-" + arr[8]);
+                }
+                cartOpen();
+            }
+        }
+        function removeProduct(code) {
+            var i = find(code);
+            if (i != -1) {
+                localStorage.removeItem(i);
+                cartOpen();
+                snackbarShow("Remove item successful!");
+            }
+        }
+        function cartClose() {
+            document.getElementById("c").style.display = "none";
+        }
+        function backRun(){
+            document.getElementById("c3form").className = "c3formClose"; 
+        }
+        function finish() {
+            var tag = document.getElementById("c3form");
+            var tag2 = document.getElementById("c3ul");
+            if (tag.className == "c3formClose"){
+                if (tag2.childElementCount <= 0) {
+                    snackbarShow("The cart is empty!");
+                    return true;
+                }
+                tag.className = "c3formOpen";
+                return true;
+            }
+            if (check() == false)
+                return false;
+            snackbarShow("Succcessful! We will contact you soon!");
+            var q = localStorage.getItem("quantity");
+            for (var i = 1; i <= q; i++){
+                localStorage.removeItem(i);
+            }
+            localStorage.setItem("quantity", 0);
+            cartOpen();
+            return true;
+        }
+        function check() {
+            if (document.f.txt5.checked == false) {
+                snackbarShow('You have to checked "I am sure my personal information is accurate and up to date."');
+                return false;
+            }
+            if (checkName() && checkPhone() && checkEmail() && checkAddress()){
+                return true;
+            }
+            return false;
+        }
+        function checkName(){
+            if (patternName.test(document.f.txt1.value) == false) {
+                snackbarShow("You have to input name!");
+                document.f.txt1.focus();
+                return false;
+            }
+            return true;
+        }
+        function checkPhone(){
+            if (patternPhone.test(document.f.txt2.value) == false) {
+                snackbarShow("Phone number must have 10-11 digits!");
+                document.f.txt2.focus();
+                return false;
+            }
+            return true;
+        }
+        function checkEmail(){
+            if (patternEmail.test(document.f.txt3.value) == false) {
+                snackbarShow("Email must like \"Example@gmail.com\"!");
+                document.f.txt3.focus();
+                return false;
+            }
+            return true;
+        }
+        function checkAddress(){
+            if (/[a-zA-Z0-9]+/.test(document.f.txt4.value) == false) {
+                snackbarShow("You must fill in your address!");
+                document.f.txt4.focus();
+                return false;
+            }
+            return true;
+        }
+//snackbar 
+        function snackbarShow(s){
+            var tag = document.getElementById("snackbarbox");
+            tag.style.visibility = "visible";
+            var d = document.createElement("DIV");
+            d.className = 'snackbar';
+            d.style.animation = "slide 4s 1";
+            d.appendChild(document.createTextNode(s));
+            tag.appendChild(d);
+            setTimeout("snackbarOff()", 3500);
+        }
+        function snackbarOff() {
+            var tag = document.getElementById("snackbarbox");
+            var check = tag.childElementCount;
+            if (tag.hasChildNodes()) {
+                tag.removeChild(tag.childNodes[0]);
+            }
+            if (tag.childElementCount == check) {
+                tag.removeChild(tag.childNodes[0]);
+            }
+        }
+//detail
+        function detailRun(tagId) {
+            var tag1 = document.getElementById(tagId);
+            var tag2 = document.getElementById("con" + tagId);
+            if (tag1 == null)
+                return;
+            if (tag2.className == 'containClose') {
+                tag2.className = 'containOpen';
+                tag1.className = 'tdetailOpen';
+            } else {
+                tag2.className = 'containClose';
+                tag1.className = 'tdetail';
+            }
+        }
+//nav
+        function navColor() {
+            if (y < 800) {
+                navResetColor();
+                document.getElementById("btn1").style.backgroundColor = "#eee";
+            } else if (y >= 800 && y < 1400) {
+                navResetColor();
+                document.getElementById("btn2").style.backgroundColor = "#eee";
+            } else if (y >= 1400 && y < 2000) {
+                navResetColor();
+                document.getElementById("btn3").style.backgroundColor = "#eee";
+            } else if (y >= 2000 && y < 2680) {
+                navResetColor();
+                document.getElementById("btn4").style.backgroundColor = "#eee";
+            } else if (y >= 2680 && y < 3300) {
+                navResetColor();
+                document.getElementById("btn5").style.backgroundColor = "#eee";
+            } else if (y >= 3300 && y < 3900) {
+                navResetColor();
+                document.getElementById("btn6").style.backgroundColor = "#eee";
+            } else if (y >= 3900 && y < 4500) {
+                navResetColor();
+                document.getElementById("btn7").style.backgroundColor = "#eee";
+            } else if (y >= 4500) {
+                navResetColor();
+                document.getElementById("btn8").style.backgroundColor = "#eee";
+            }
+        }
+
+        function navOver(tag) {
+            tag.style.backgroundColor = "#eee";
+        }
+
+        function navResetColor() {
+            for (var i = 2; i <= 8; i++) {
+                document.getElementById("btn" + i).style.backgroundColor = "#777";
+            }
+        }
+
+        function nav(pos) {
+            var step = (pos - window.pageYOffset) * 1.0 / 50;
+            var time = 50;
+            var tmp = Math.abs(step);
+            if (tmp < 20) {
+                step = step / tmp * 20;
+                time = Math.abs(pos * 1.0 - window.pageYOffset) / 20;
+            }
+            navStop();
+            document.body.addEventListener("mousewheel", navStop);
+            idscroll = setInterval("navScroll(" + step + "," + time + "," + pos + ")", 20);
+        }
+
+        function navScroll(step, time, pos) {
+            c++;
+            if (c > time) {
+                window.scrollTo(0, pos);
+                c = 0;
+                clearInterval(idscroll);
+                return;
+            }
+            window.scrollBy(0, step);
+        }
+
+        function navStop() {
+            c = 0;
+            document.body.removeEventListener("mousewheel", navStop);
+            clearInterval(idscroll);
+        }
+//class type
+        function changeClass(type) {
+            var hp = document.getElementById("hp");
+            var mana = document.getElementById("mana");
+            var speed = document.getElementById("speed");
+            var classname = document.getElementById("classname");
+            var classdetail = document.getElementById("classdetail");
+            var classimg = document.getElementById("classimg");
+            var classchose = document.getElementById("classchose");
+            switch (type) {
+            case 1:
+                hp.style.width = "80%";
+                mana.style.width = "40%";
+                speed.style.width = "60%";
+                classname.innerHTML = "SABER";
+                classdetail.innerHTML = "Strong and fast. She is the King of Knights. Saber has the appearance of a young woman in her late teens with a slender physique and soft, white skin.";
+                break;
+            case 2:
+                hp.style.width = "40%";
+                mana.style.width = "60%";
+                speed.style.width = "80%";
+                classname.innerHTML = "ARCHER";
+                classdetail.innerHTML = "Hiding in the dark, he will kill all enemies silently. He was known as Faker of CITY. \"Run away from me? You can't.\"";
+                break;
+            case 3:
+                hp.style.width = "50%";
+                mana.style.width = "90%";
+                speed.style.width = "40%";
+                classname.innerHTML = "CASTER";
+                classdetail.innerHTML = "Intelligent is her strengh. With her staff, no enemies can't touch her. Caster's appearance is much like a witch that would be seen in a fairy tale.";
+                break;
+            }
+            classimg.src = "Image/" + type + "Class.png";
+            classchose.src = "Image/Class" + type + ".png";
+        }
+//story
+        function situRun(num) {
+            document.getElementById("situ" + num).style.transform = "translateX(0%)";
+            if ((num + 1) > 4)
+                return;
+            else
+                id = setTimeout("situRun(" + ++num + ")", 500);
+        }
+//background
+        function bgrun(num) {
+            for (var i = 1; i <= 4; i++) {
+                if (i == num) {
+                    document.getElementById("bg" + i).style.opacity = "1";
+                    document.getElementById("bgbutton" + i).style.outline = "3px solid #fc0";
+                } else {
+                    document.getElementById("bg" + i).style.opacity = "0";
+                    document.getElementById("bgbutton" + i).style.outline = "none";
+                }
+            }
+
+        }
+//disk
+        function diskRun(pos1, pos2, start, end) {
+            var tag = document.getElementById("disk");
+            if (y < start || y > end)
+                return;
+            tag.style.transform = "translateX(50%) translateY(30%) rotate(-" + (pos1 + (y - start) * (0 - pos2 - pos1) / (end - start)) + "deg)"
+        }
+//para
+        function paraV(tagId, pos1, pos2, start, end) {
+            var tag = document.getElementById(tagId);
+            if (y < start || y > end)
+                return;
+            tag.style.transform = "translateX(-50%) translateY(-" + (pos1 + (y - start) * (pos2 - pos1) / (end - start)) + "%)"
+        }
+
+        function paraVRev(tagId, pos1, pos2, start, end) {
+            var tag = document.getElementById(tagId);
+            if (y < start || y > end)
+                return;
+            tag.style.transform = "translateX(-50%) translateY(" + (pos1 + (y - start) * (pos2 - pos1) / (end - start)) + "%)"
+        }
+
+        function paraHLeft(tagId, pos1, pos2, start, end) {
+            var tag = document.getElementById(tagId);
+            if (y < start || y > end)
+                return;
+            tag.style.transform = "translateX(" + (pos1 + (y - start) * (pos2 - pos1) / (end - start)) + "%)"
+        }
+
+        function paraHRight(tagId, pos1, pos2, start, end) {
+            var tag = document.getElementById(tagId);
+            if (y < start || y > end)
+                return;
+            tag.style.transform = "translateX(" + (pos1 + (y - start) * (pos2 - pos1) / (end - start)) + "%)"
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+          }
+
+          ::-webkit-scrollbar-track {
+              background-color:#212121;
+          }
+          ::-webkit-scrollbar-thumb {
+              background-color:#757575;
+          }
+    </style>
+</head>
+
+<body onload="setControl()" onscroll="control()" onchange="setControl()">
+    <header class="full">
+        <img src="Image/Letter.png" id="logoletter" />
+        <img src="Image/LogoSword2.png" id="logosword" />
+    </header>
+    <div class="full" id="equi">
+        <img src="Image/Equi2.png" id="equi2" />
+        <img src="Image/Equi1.png" id="equi1" />
+        <img src="Image/equi.png" />
+    </div>
+    <div class="full bgprl" id="b1">
+        <img src="Image/Story1.png" id="story1" />
+        <img src="Image/Story2.png" id="story2" />
+        <img src="Image/Story3.png" id="story3" />
+        <img src="Image/Story4.png" id="story4" />
+        <img src="Image/Story5.png" id="story5" />
+    </div>
+    <div class="full" id="a1">
+        <p id="h">FOLLOW US AND BECOME A HERO</p>
+        <div id="a1-1">
+            <img src="Image/fb-art.png" />
+            <p>DECINICGAMES</p>
+        </div>
+    </div>
+    <div class="full bgprl" id="b2">
+        <img src="Image/mikasa1.png" id="mikasa1" />
+        <img src="Image/Action2.png" id="Action2" />
+        <img src="Image/mikasa2.png" id="mikasa2" />
+        <img src="Image/Action1.png" id="Action1" />
+        <video controls>
+            <source src="Image/Video.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="full" id="a3">
+        <div id="situ">
+            <p id="situ1">VIET NAM</p>
+            <p id="situ2">YEAR 2068</p>
+            <br/>
+            <hr id="situ5" />
+            <br/>
+            <br/>
+            <p id="situ3">AFTER THE INVADING DIMENSIONAL MONSTERS WERE BEATEN BACK, CITY WAS REBUILT. THIS IS A STORY OF DECINIC IN NEW CITY.</p>
+            <br/>
+            <p id="situ4">Mysterious dimensional gates opened all over the planet and unleashed a worldwide invasion of dimensional monsters. No weapons and tactics had any effect on the waves of dimensional monsters pouring out of the dimensional gates.</p>
+        </div>
+    </div>
+    <div class="full bgprl" id="a2">
+        <div id="a2-1">
+            <h2 id="classname">SABER</h2>
+            <br/>
+            <p>HP</p>
+            <hr id="hp" />
+            <p>MANA</p>
+            <hr id="mana" />
+            <p>SPEED</p>
+            <hr id="speed" />
+            <br/>
+            <p id="classdetail">Strong and fast. She is the King of Knights. Saber has the appearance of a young woman in her late teens with a slender physique and soft, white skin.</p>
+        </div>
+        <div id="a2-2">
+            <img src="Image/1Class.png" id="classimg" />
+        </div>
+        <div id="a2-3">
+            <h1>CHARACTER <br/>&amp; CLASS</h1>
+            <h3>3 CLASSES</h3>
+            <p>Each character has a different set of skills and a variety of awesome items. Combine them to develop your own unique style. Along with the four classes that we have now, we are also working on four additional characters that will be revealed during the open beta. Many other unique characters will be added, too.</p>
+            <img id="classchose" src="Image/Class1.png" usemap="#classmap" />
+            <map name="classmap">
+                <area shape="poly" coords="121,150,121,70,129,70,128,29,160,30,160,70,168,70,168,150,121,150" onclick="changeClass(1)" />
+                <area shape="poly" coords="107,150,107,44,97,37,97,0,70,0,70,44,57,48,47,150,107,150" onclick="changeClass(2)" />
+                <area shape="poly" coords="186,150,186,123,179,122,172,67,193,50,194,0,229,0,229,48,250,64,260,150,186,150" onclick="changeClass(3)" />
+            </map>
+        </div>
+    </div>
+    <div class="full" id="a4">
+        <div id="a4-1">
+            <img src="Image/bg4.jpg" id="bg4" />
+            <img src="Image/bg3.jpg" id="bg3" />
+            <img src="Image/bg2.jpg" id="bg2" />
+            <img src="Image/bg1.jpg" id="bg1" />
+        </div>
+        <div id="a4-2">
+            <h1>STORY</h1>
+            <h1>BACKGROUND</h1>
+        </div>
+        <div id="a4-3">
+            <ul>
+                <li><img src="Image/thum%20(1).jpg" id="bgbutton1" onclick="bgrun(1)" /></li>
+                <li><img src="Image/thum%20(2).jpg" id="bgbutton2" onclick="bgrun(2)" /></li>
+                <li><img src="Image/thum%20(3).jpg" id="bgbutton3" onclick="bgrun(3)" /></li>
+                <li><img src="Image/thum%20(4).jpg" id="bgbutton4" onclick="bgrun(4)" /></li>
+            </ul>
+        </div>
+    </div>
+    <div class="full bgprl" id="a5">
+        <div id="a5-1">
+            <div>
+                <p>TAKE YOUR</p>
+                <h1>FIGURE</h1>
+                <br/>
+                <hr/>
+                <br/>
+                <p>Buy your favorite character figture</p>
+            </div>
+        </div>
+        <div id="a5-2">
+            <ul>
+                <li onclick="add('a111', 'Blue Saber V1', 'Image/fthum1.png', '49.99', '350', '300', '1:7', '300')">
+                    <div>
+                        <img src="Image/fthum1.png" />
+                        <img src="Image/AddToCart.png" />
+                        <div class="white"></div>
+                    </div>
+                    <h2>49.99 $</h2>
+                </li>
+                <li onclick="add('a112', 'Red Archer V1', 'Image/fthum2.png', '59.99', '400', '300', '1:5', '310')">
+                    <div>
+                        <img src="Image/fthum2.png" />
+                        <img src="Image/AddToCart.png" />
+                        <div class="white"></div>
+                    </div>
+                    <h2>59.99 $</h2>
+                </li>
+                <li onclick="add('a113', 'Blue Saber G1', 'Image/fthum3.png', '69.69', '400', '400', '1:6', '350')">
+                    <div>
+                        <img src="Image/fthum3.png" />
+                        <img src="Image/AddToCart.png" />
+                        <div class="white"></div>
+                    </div>
+                    <h2>69.69 $</h2>
+                </li>
+                <li onclick="add('a114', 'White Saber C1', 'Image/fthum4.png', '199.00', '450', '400', '1:5', '400')">
+                    <div>
+                        <img src="Image/fthum4.png" />
+                        <img src="Image/AddToCart.png" />
+                        <div class="white"></div>
+                    </div>
+                    <h2>199.00$</h2>
+                </li>
+                <li onclick="add('a115', 'White Saber S', 'Image/fthum5.png', '199.99', '450', '400', '1:5', '430')">
+                    <div>
+                        <img src="Image/fthum5.png" />
+                        <img src="Image/AddToCart.png" />
+                        <div class="white"></div>
+                    </div>
+                    <h2>199.99$</h2>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="full bgprl" id="a6">
+        <div id="a6-2">
+            <img src="Image/Disk.png" id="disk" />
+        </div>
+        <div id="a6-1">
+            <div id="a6-1-T">
+                <p id="a6-1-T1">"SHUT UP</p>
+                <p id="a6-1-T2">AND TAKE MY MONEY"</p>
+            </div>
+            <br/>
+            <div id="buyButton" onclick="add('d001', 'Story Disk Kit', 'Image/Disk.png', '499.99', '', '', '', '')">
+                <div id="bb2"></div>
+                <div id="bb3"></div>
+                <div id="bb4"><img src="Image/bbutton2.png" /></div>
+                <div id="bb1"><img src="Image/bbutton1.png" /></div>
+            </div>
+            <br/>
+            <div id="a6-1-C">
+                <p>499.99$</p>
+            </div>
+        </div>
+    </div>
+    <div class="full" id="a7">
+        <p>CONTACT US</p>
+    </div>
+    <footer class="full bgprl">
+
+        <div id="a8-1">
+            <h1>DECINIC</h1>
+            <br/>
+            <hr/>
+            <br/>
+            <p><b>ADDRESS:</b> 123 - 122 Decin Game, 1F Decen Building, District 1, Ho Chi Minh City.</p>
+            <p><b>TEL:</b> +84985389999</p>
+        </div>
+
+    </footer>
+    <!--Fixed elements-->
+    <nav class="destop">
+        <div class="btn" id="btn1" onclick="nav(0)" onmouseover="this.style.backgroundColor = '#eee';" onmouseout="navColor()"></div>
+        <div class="btn" id="btn2" onclick="nav(1000)" onmouseover="this.style.backgroundColor = '#eee';" onmouseout="navColor()"></div>
+        <div class="btn" id="btn3" onclick="nav(1600)" onmouseover="this.style.backgroundColor = '#eee';" onmouseout="navColor()"></div>
+        <div class="btn" id="btn4" onclick="nav(2200)" onmouseover="this.style.backgroundColor = '#eee';" onmouseout="navColor()"></div>
+        <div class="btn" id="btn5" onclick="nav(2880)" onmouseover="this.style.backgroundColor = '#eee';" onmouseout="navColor()"></div>
+        <div class="btn" id="btn6" onclick="nav(3500)" onmouseover="this.style.backgroundColor = '#eee';" onmouseout="navColor()"></div>
+        <div class="btn" id="btn7" onclick="nav(4100)" onmouseover="this.style.backgroundColor = '#eee';" onmouseout="navColor()"></div>
+        <div class="btn" id="btn8" onclick="nav(4700)" onmouseover="this.style.backgroundColor = '#eee';" onmouseout="navColor()"></div>
+    </nav>
+    <nav class="phone">
+        <div class="btn" id="btnNav"></div>
+        <div class="btn" id="btn1" onclick="nav(0)"></div>
+        <div class="btn" id="btn2" onclick="nav(1150)"></div>
+        <div class="btn" id="btn3" onclick="nav(1750)"></div>
+        <div class="btn" id="btn4" onclick="nav(3050)"></div>
+    </nav>
+    <div id="cart" onclick="cartOpen()"></div>
+    <div id="c">
+        <div id="cClose" onclick="cartClose()"></div>
+        <div id="cc">
+            <div id="c2">
+                <p>CART</p>
+            </div>
+            <div id="c1"></div>
+            <div id="c3">
+                <div id="c3ul">
+                </div>
+                <div id="c3form" class="c3formClose">
+                    <div id="back" onclick="backRun()"></div>
+                    <form name="f">
+                        <p>Name<br/><input type="text" name="txt1"/>*</p>
+                        <p>Phone Number<br/><input type="text" name="txt2"/>*</p>
+                        <p>Email<br/><input type="text" name="txt3"/>*</p>
+                        <p>Address<br/><input type="text" name="txt4"/>*</p>
+                        <p><input type="checkbox" name="txt5"/> I am sure my personal information is accurate and up to date.</p>
+                    </form>
+                </div>
+            </div>
+            <div id="c4">
+                <div id="c4-1" onclick="return finish()">
+                    DONE
+                </div>
+                <div id="c4-2">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="snackbarbox">
+    </div>
+</body>
+
+</html>
