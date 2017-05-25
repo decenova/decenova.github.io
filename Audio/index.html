@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audio</title>
+    <style>
+        body{
+            background-color: black;
+            background-image: url("MhhqlD7.jpg");
+            background-attachment: fixed;
+            background-position: 0px -150px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            animation: bgmove 30s linear infinite reverse;
+        }
+        canvas {
+            opacity: 0.5;
+            transition: opacity 0.033s, height 0.033s, width 0.033s;
+            z-index: 10;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+        }
+        video{
+            z-index: 10;
+            position: fixed;
+            right: 0px;
+            bottom: 0px;
+        }
+        div {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            left: 50%;
+            bottom: 0%;
+            transform: translate(-50%,0%);
+            background: linear-gradient( rgba(255,255,255,0),#ffffff);
+            opacity: 1;
+            transition: opacity 0.033s, height 0.033s, width 0.033s;
+            z-index: 0;
+        }
+        @keyframes bgmove {
+            0% {background-position: 0px -150px;}
+            50% {background-position: 0px -350px;}
+            100% {background-position: 0px -150px;}
+        }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" width="1000" height="600" style="border:0px solid #000000;color: #e4463a;">
+</canvas>
+<div></div>
+<video width="320" height="240" autoplay controls>
+    <source src="Eruku%20-%20Samurai.mp4" type="video/mp4">
+    Your browser does not support the audio element.
+</video>
+<script>
+    var canvas = document.querySelector('canvas'),
+        ctx = canvas.getContext('2d');
+    var grd = ctx.createLinearGradient(0,800,0,400);
+    grd.addColorStop(0,"rgba(125,125,125,0.5)");
+    grd.addColorStop(1,'rgba(255,255,255,1)');
+    ctx.fillStyle = grd;
+
+    var width = 1000;
+    var height = 600;
+
+
+    // here we create our chain
+    var audio = document.querySelector('video'),
+        div = document.querySelector('div'),
+        audioContext = new AudioContext(),
+        source = audioContext.createMediaElementSource(audio),
+        analyser = audioContext.createAnalyser();
+
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+
+    setInterval(function(){
+        var freqData = new Uint8Array(analyser.frequencyBinCount);
+
+        analyser.getByteFrequencyData(freqData);
+        ctx.clearRect(0, 0, width, height);
+        for (var i = 0; i < freqData.length; i+=10 ) {
+            var magnitude = freqData[i]/50;
+            ctx.fillRect(i*1, height, 6, -magnitude * magnitude * magnitude * magnitude);
+        }
+        canvas.style.opacity = freqData[10]/400 + 0.3;
+//        div.style.height = freqData[10]/2 + "%";
+        var tmp = freqData[3]/30;
+        div.style.opacity = (tmp * tmp * tmp)/600 - 0.3;
+    }, 33);
+</script>
+
+</body>
+</html>
