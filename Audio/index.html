@@ -26,17 +26,52 @@
             position: fixed;
             right: 0px;
             bottom: 0px;
+            /*-webkit-filter: url('#svg-blur');*/
+            opacity: 0;
+            /*background-color: black;*/
         }
-        div {
+        audio{
+            z-index: 10;
+            position: fixed;
+            right: 0px;
+            bottom: 0px;
+            /*-webkit-filter: url('#svg-blur');*/
+            opacity: 0.4;
+            background-color: black;
+        }
+        div.b{
+             width: 320px;
+             height: 240px;
+             z-index: 0;
+             position: fixed;
+             right: 0px;
+             bottom: 0px;
+             -webkit-filter: url('#svg-blur');
+             opacity: 1;
+             background-image: url("MhhqlD7.jpg");
+             background-attachment: fixed;
+             background-position: 0px -150px;
+             background-repeat: no-repeat;
+             background-size: cover;
+             animation: bgmove 30s linear infinite reverse;
+         }
+        form{
+            z-index: 0;
+            position: fixed;
+            right: 0px;
+            top: 0px;
+            z-index: 11;
+        }
+        div.a {
             position: fixed;
             width: 100%;
             height: 70%;
             left: 50%;
             bottom: 0%;
             transform: translate(-50%,0%);
-            background: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,0.8));
+            background: linear-gradient( rgba(255,255,255,0),rgba(255,255,255,0.8));
             opacity: 1;
-            transition: opacity 0.033s, height 0.033s, width 0.033s;
+            transition: opacity 0.033s ease-out, height 0.033s, width 0.033s;
             z-index: 0;
         }
         @keyframes bgmove {
@@ -44,34 +79,81 @@
             50% {background-position: 0px -350px;}
             100% {background-position: 0px -150px;}
         }
+        svg {
+            display: none;
+        }
+
     </style>
 </head>
-<body>
-<canvas id="myCanvas" width="1000" height="600" style="border:0px solid #000000;color: #e4463a;">
+<body onclick="controllAudio()">
+<canvas id="myCanvas" width="1200" height="800" style="border:0px solid #000000;color: #e4463a;">
 </canvas>
-<div></div>
+<div class="b">
+</div>
+<!--<form action="">-->
+    <!--<input type="text" name="urlMusic" id="urlMusic">-->
+    <!--<input type="button" name="submit" id="submit" value="submit" onclick="chargeUrl()">-->
+<!--</form>-->
+<div class="a"></div>
 <video width="320" height="240" autoplay controls>
     <source src="Eruku%20-%20Samurai.mp4" type="video/mp4">
+    <!--<source src="Ai-cho-ai-FloD-ft-M-Prod-by-Dizzla-D.mp3" type="audio/mpeg">-->
     Your browser does not support the audio element.
 </video>
+<!--<audio width="320" height="240" autoplay controls>-->
+    <!--<source src="Faded%20-%20Touliver.mp3" type="audio/mpeg">-->
+    <!--Your browser does not support the audio element.-->
+<!--</audio>-->
+<svg id="svg-filter">
+    <filter id="svg-blur">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10"></feGaussianBlur>
+    </filter>
+</svg>
+
+<script>
+    var on = true;
+    function chargeUrl() {
+        var url = document.getElementById('urlMusic');
+        var audio = document.querySelector('audio');
+        audio.src = url.value;
+        audio.load();
+    }
+    function controllAudio() {
+        var audio = document.querySelector('video');
+        if (on) {
+            audio.pause();
+            on = false;
+        }else {
+            audio.play();
+            on = true;
+        }
+    }
+</script>
+
 <script>
     var canvas = document.querySelector('canvas'),
         ctx = canvas.getContext('2d');
-    var grd = ctx.createLinearGradient(0,800,0,400);
-    grd.addColorStop(0,"rgba(125,125,125,0.5)");
-    grd.addColorStop(1,'rgba(255,255,255,1)');
+//    var grd = ctx.createLinearGradient(0,800,0,400);
+//    grd.addColorStop(0,"rgba(0,0,0,0.5)");
+//    grd.addColorStop(1,'rgba(255,255,255,1)');
+//    ctx.fillStyle = grd;
+    var grd = ctx.createLinearGradient(0,800,600,600);
+    grd.addColorStop(1,"rgba(255,100,100,0.5)");
+    grd.addColorStop(0.5,"rgba(0,255,0,0.7)");
+    grd.addColorStop(0,'rgba(0,0,125,1)');
     ctx.fillStyle = grd;
 
-    var width = 1000;
-    var height = 600;
+    var width = 1200;
+    var height = 800;
 
 
     // here we create our chain
     var audio = document.querySelector('video'),
-        div = document.querySelector('div'),
+        div = document.querySelector('div.a'),
         audioContext = new AudioContext(),
         source = audioContext.createMediaElementSource(audio),
         analyser = audioContext.createAnalyser();
+
 
     source.connect(analyser);
     analyser.connect(audioContext.destination);
@@ -81,13 +163,16 @@
 
         analyser.getByteFrequencyData(freqData);
         ctx.clearRect(0, 0, width, height);
-        for (var i = 0; i < freqData.length; i+=10 ) {
+        var avg = 0;
+        for (var i = 0; i < freqData.length; i+=5 ) {
+            avg += freqData[i];
             var magnitude = freqData[i]/50;
             ctx.fillRect(i*1, height, 6, -magnitude * magnitude * magnitude * magnitude);
         }
         canvas.style.opacity = freqData[10]/400 + 0.3;
 //        div.style.height = freqData[10]/2 + "%";
-        var tmp = freqData[3]/30;
+        var tmp = freqData[5]/30;
+//        var tmp = avg/(freqData.length/10);
         div.style.opacity = (tmp * tmp * tmp)/600 - 0.3;
     }, 33);
 </script>
