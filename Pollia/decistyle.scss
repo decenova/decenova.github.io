@@ -1,0 +1,380 @@
+//----------
+//Import
+//----------
+@import "reset";
+@import "decimixin";
+
+//----------
+//Variable
+//----------
+
+$limitWidth: 1440px;
+$gradientBlue01: linear-gradient(45deg, rgb(80, 80, 150), rgb(100, 200, 200));
+
+#gradientBackgroundBlue01 {
+  background-color: #08AEEA;
+  background-image: linear-gradient(63deg, #08AEEA 0%, #2AF598 100%);
+}
+
+//----------
+//Mixin
+//----------
+
+#oneline {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#gradientBlue01 {
+  height: 100px;
+  width: 100px;
+  background: $gradientBlue01;
+}
+
+//----------
+//Division
+//----------
+
+.window {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  .center {
+    position: absolute;
+    @include setPosition(50, 50, -50, -50);
+  }
+  .full {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+  }
+}
+
+.windowLimitWidth {
+  @extend .window;
+  max-width: $limitWidth;
+  margin: auto;
+}
+
+.windowDyanmicHigh {
+  @extend .window;
+  height: auto;
+}
+
+.backgroundImage {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.backgroundImageFix {
+  background-attachment: fixed;
+}
+
+//----------
+//Special
+//----------
+
+.hr {
+  width: 100%;
+  height: 1px;
+  background: $gradientBlue01;
+  margin: 8px 0px;
+}
+
+//----------
+//Avatar
+//----------
+
+$squareSizeRate: 70.7106781%;
+
+.avatar {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  .frame {
+    position: absolute;
+    @include setPosition(50, 50, -50, -50);
+    width: $squareSizeRate - 5%;
+    height: $squareSizeRate - 5%;
+    &::before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      @include setPositionRotate(50, 50, -50, -50, 45);
+      // box-sizing: content-box;
+      border: 100px solid transparent;
+      -moz-border-image: -moz-linear-gradient(top, #3acfd5 0%, #3a4ed5 100%);
+      -webkit-border-image: -webkit-linear-gradient(top, #3acfd5 0%, #3a4ed5 100%);
+      border-image: linear-gradient(to bottom, #3acfd5 0%, #3a4ed5 100%);
+      border-image-slice: 1;
+    }
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      @include diamond;
+      box-sizing: border-box;
+      border: 5px solid #fff;
+      outline: 100px solid #fff;
+      outline-offset: 2px;
+    }
+  }
+  .image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    @extend .backgroundImage;
+    background-image: url("./img/avatar.jpg");
+  }
+}
+
+.avatar2x {
+  width: 128px;
+  height: 128px;
+  .frame {
+    width: $squareSizeRate - 10%;
+    height: $squareSizeRate - 10%;
+    &::before {
+      border-width: 100px;
+    }
+    &::after {
+      border-width: 5px;
+      outline-width: 100px;
+      outline-offset: 5px;
+    }
+  }
+}
+
+//----------
+//List
+//----------
+ul {
+  margin: 0;
+  padding-left: 10px;
+  list-style: none;
+}
+
+//----------
+//Popup
+//----------
+.popupContain {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  .backgroundExit {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .popup {
+    position: absolute;
+    max-height: 480px;
+    max-width: 780px;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    @include setPosition(50, 50, -50, -50);
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    .imageCover {
+
+    }
+    .detail {
+      display: grid;
+      grid-template-rows: 100px 1fr 120px;
+      padding: 0px 0px 0px 20px;
+      .title {
+        padding: 20px 0px 0px 0px;
+        span{
+          position: absolute;
+          @include setPosition(100,0,-200,50);
+        }
+        p {
+          @extend #oneline;
+        }
+        .t1 {
+          color: #3333ff;
+        }
+        .t2 {
+          font-size: 2em;
+        }
+        .t3 {
+          font-size: 0.9em;
+          color: #666666;
+        }
+      }
+      .info {
+        max-height: 260px;
+        overflow: auto;
+        div {
+          box-sizing: border-box;
+          padding-top: 16px;
+          height: 100%;
+        }
+      }
+      .control {
+        padding-top: 10px;
+        position: relative;
+        .buttonsContain{
+          position: absolute;
+          @include setPosition(100,50,-120,-50);
+        }
+      }
+    }
+  }
+}
+
+//----------
+//Element
+//----------
+$elementMinHeight: 300px;
+$elementMinWidth: 300px;
+$elementSquareSize: 48px;
+
+.elementContain {
+  position: relative;
+  display: inline-block;
+  padding: $elementSquareSize/2;
+  min-height: $elementMinHeight;
+  min-width: $elementMinWidth;
+
+  .element {
+    position: relative;
+    margin: 0px auto;
+    height: $elementMinHeight;
+    width: $elementMinWidth;
+    background-color: #ffffff;
+    .imageCover {
+      width: 100%;
+      height: 50%;
+      @extend .backgroundImage;
+    }
+    .squareContain {
+      .square {
+        @include setPosition(100, 50, -150, -50);
+        position: absolute;
+        height: $elementSquareSize * 0.7071;
+        width: $elementSquareSize  * 0.7071;
+        &:before {
+          content: "";
+          display: block;
+          height: 100%;
+          width: 100%;
+          box-sizing: border-box;
+          @include diamond();
+          background: $gradientBlue01;
+          background-color: rgb(25, 0, 255);
+        }
+        p {
+          position: absolute;
+          @include setPosition(50, 50, -50, -50);
+          color: #ffffff;
+          font-weight: bold;
+        }
+      }
+    }
+    .detail {
+      padding: 6px 6px 6px 6px;
+      color: #333333;
+      .type {
+        font-size: 1em;
+        color: #3333ff;
+        // color: $gradientBlue01;
+      }
+      .title {
+        font-size: 1.2em;
+        font-weight: bold;
+        @extend #oneline;
+      }
+      .address {
+        @extend #oneline;
+        font-size: 0.8em;
+      }
+      .description {
+        font-style: italic;
+        font-size: 0.8em;
+      }
+    }
+  }
+}
+
+$squareSize: 100px;
+.squareContainInfo {
+  position: relative;
+  height: $squareSize;
+  width: $squareSize;
+  .square {
+    @include setPosition(50, 50, -50, -50);
+    position: absolute;
+    height: $squareSize * 0.7071;
+    width: $squareSize  * 0.7071;
+    &:before {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      @include diamond();
+      border: 2px solid #3333ff;
+    }
+    p {
+      position: absolute;
+      color: #333333;
+      text-align: center;
+      font-family: hero-light;
+    }
+    .label {
+      @include setPosition(50, 50, -50, -200);
+      font-size: 0.75em;
+    }
+    .info {
+      @include setPosition(50, 50, -50, -50);
+    }
+  }
+  .square2d{
+    height: $squareSize / 2 * 0.7071;
+    width: $squareSize  / 2 * 0.7071;
+    p {
+      font-size: 1em;
+    }
+    .label {
+      @include setPosition(50, 50, -50, -150);
+      font-size: 0.5em;
+    }
+  }
+  .square2x{
+    height: $squareSize * 2 * 0.7071;
+    width: $squareSize * 2 * 0.7071;
+    p {
+      font-size: 2em;
+    }
+  }
+  .pos1{
+    @include setPosition(50, 50, -50, -50);
+  }
+  .pos2{
+    @include setPosition(105, 80, -50, -50);
+  }
+  .pos3{
+    @include setPosition(135, 50, -50, -50);
+  }
+  .yellow{
+    &:before {
+      border-color: #ffbd00;
+    }
+  }
+}
+
+//----------
+//Form
+//----------
+
+@import "form";

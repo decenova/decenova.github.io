@@ -1,0 +1,186 @@
+@import "decimixin";
+
+//----------
+//button
+//----------
+
+
+$buttonPadding: 0px 10px;
+$buttonHeight: 32px;
+$button01Border: 3px solid #ffffff;
+$buttonColor: #ffffff;
+
+.buttonContain{
+  position: relative;
+  padding: 0px $buttonHeight/2;
+  display: inline-block;
+}
+
+.button {
+  padding: $buttonPadding;
+  text-align: center;
+  height: $buttonHeight;
+  color: $buttonColor;
+  cursor: pointer;
+  user-select: none;
+}
+
+.button01 {
+  position: relative;
+  font-size: 24px;
+  line-height: $buttonHeight;
+  *{
+    position: relative;
+  }
+  &:hover{
+    color: #333333;
+    background-color: #ffffff;
+    .edge::before{
+      background-color: #ffffff;
+    }
+  }
+  &:active{
+    color: #333333;
+    background-color: #cccccc;
+    .edge::before{
+      background-color: #cccccc;
+      border-color: #cccccc;
+    }
+  }
+  .edge {
+    position: absolute;
+    height: $buttonHeight * 0.7071;
+    width: $buttonHeight  * 0.7071;
+    &:before{
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      @include diamond();
+    }
+  }
+  .left {
+    @include setPosition(0, 50, -50, -50);
+    &:before{
+      border-bottom: $button01Border;
+      border-left: $button01Border;
+    }
+  }
+  .right {
+    @include setPosition(100, 50, -50, -50);
+    &:before{
+      border-top: $button01Border;
+      border-right: $button01Border;
+    }
+  }
+}
+
+.button02 {
+  position: relative;
+  font-size: 24px;
+  line-height: $buttonHeight;
+  background-color: #3333ff;
+  *{
+    position: relative;
+  }
+  &:hover{
+    color: #ffffff;
+    background-color: #3388ff;
+    .edge::before{
+      background-color: #3388ff;
+    }
+  }
+  &:active{
+    color: #ffffff;
+    background-color: #333388;
+    .edge::before{
+      background-color: #333388;
+    }
+  }
+  .edge {
+    position: absolute;
+    height: $buttonHeight * 0.7071;
+    width: $buttonHeight  * 0.7071;
+    &:before{
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      @include diamond();
+    }
+  }
+  .left {
+    @include setPosition(0, 50, -50, -50);
+    &:before{
+      background-color: #3333ff;
+    }
+  }
+  .right {
+    @include setPosition(100, 50, -50, -50);
+    &:before{
+      background-color: #3333ff;
+    }
+  }
+}
+
+//----------
+//input
+//----------
+$inputPadding: 6px 6px;
+$inputFontSize: 1em;
+$inputBackgroundColor: #ffffff;
+$inputColor: #333333;
+$inputBorderColor: rgba(51,51,51,0.5);
+$inputFocusBorderColor: rgb(0, 119, 255);
+
+#formDefaultColor{
+  background-color: $inputBackgroundColor;
+  border: none;
+  color: $inputColor;
+  &:focus{
+    outline: none;
+  }
+}
+
+input{
+  @extend #formDefaultColor;
+  border-bottom: 1px solid $inputBorderColor;
+  padding: $inputPadding;
+  font-size: $inputFontSize;
+  transition: border 0.5s;
+}
+input:focus{
+  border-bottom: 2px solid $inputFocusBorderColor;
+}
+
+.inputGroup{
+  &::selection{
+    label{
+      color: $inputFocusBorderColor;
+    }
+  }
+}
+
+select{
+  @extend #formDefaultColor;
+  padding: $inputPadding;
+  font-size: $inputFontSize;
+  // &:internal-list-box{
+  //   @extend #formDefaultColor;
+  // }
+  option{
+    @extend #formDefaultColor;
+    background-color: $inputBackgroundColor;
+    outline: none;
+  }
+}
+
+label{
+  display: block;
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: $inputPadding;
+  padding-bottom: 3px;
+}

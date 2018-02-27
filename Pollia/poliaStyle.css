@@ -1,0 +1,246 @@
+@font-face {
+  font-family: variane;
+  src: url("./font/VarianeScript.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: pacifico;
+  src: url("./font/Pacifico.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: king-basil-lite;
+  src: url("./font/King-Basil-Lite.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: hero-light;
+  src: url("./font/HeroLight.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal; }
+#gradientBackgroundPollia01 {
+  background-color: rgba(194, 194, 194, 0);
+  background-image: linear-gradient(170deg, white 20%, rgba(255, 255, 255, 0)); }
+
+#gradientBackgroundPollia02, .a .a0-2 {
+  background-color: rgba(194, 194, 194, 0);
+  background-image: linear-gradient(0deg, rgba(20, 50, 100, 0.8) 0%, rgba(255, 255, 255, 0) 80%); }
+
+body {
+  font-family: sans-serif;
+  background-color: #eeeeee; }
+
+.a {
+  position: relative; }
+  .a .a1 {
+    font-family: king-basil-lite;
+    font-size: 10em;
+    color: #ffffff; }
+  .a .a2 {
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0%;
+    top: 100%;
+    transform: translate(0%, -200%); }
+    .a .a2 .a2-1 {
+      margin: auto;
+      height: 100%;
+      max-width: 780px;
+      background-color: #eeeeee;
+      padding: 4px;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr; }
+      .a .a2 .a2-1 input {
+        width: 100%; }
+      .a .a2 .a2-1 select {
+        width: 100%; }
+      .a .a2 .a2-1 .button02 {
+        background-color: #33c5ff; }
+        .a .a2 .a2-1 .button02:hover {
+          color: #ffffff;
+          background-color: #3388ff; }
+          .a .a2 .a2-1 .button02:hover .edge::before {
+            background-color: #3388ff; }
+        .a .a2 .a2-1 .button02:active {
+          color: #ffffff;
+          background-color: #006dc7; }
+          .a .a2 .a2-1 .button02:active .edge::before {
+            background-color: #006dc7; }
+
+.b {
+  position: relative; }
+  .b .b1 .b1-1 {
+    background-image: url("./img/partynight.jpg"); }
+  .b .b1 .b1-2 {
+    background-color: #eeeeee; }
+  .b .b1 .b1-3 {
+    position: relative; }
+    .b .b1 .b1-3 .b1-1-1 {
+      height: 100px;
+      width: 100%; }
+    .b .b1 .b1-3 .b1-1-2 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 100px;
+      width: 100%;
+      transform: rotate(180deg); }
+  .b .b1 .b1-4 {
+    background-color: rgba(0, 0, 0, 0.3); }
+  .b .b2 {
+    padding: 30px 0px 30px 0px;
+    background-color: transparent;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px; }
+    .b .b2 .b2-1 {
+      display: grid;
+      margin: 0 auto;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      grid-auto-rows: minmax(150px, auto); }
+  .b .padingfix {
+    padding: 0px 0px 40px 0px; }
+
+footer h1 {
+  margin-bottom: 5px; }
+footer p {
+  max-width: 780px;
+  margin: auto;
+  color: #333333;
+  font-size: 1.5em;
+  text-align: center; }
+
+.n, .s-n {
+  width: 100%;
+  left: 0%;
+  top: 0%;
+  transform: translate(0%, 0%);
+  position: fixed;
+  color: #ffffff; }
+
+nav {
+  max-width: 1080px;
+  margin: auto;
+  display: grid;
+  height: 42px;
+  grid-template-columns: 100px 1fr 100px; }
+  nav .n1 {
+    box-sizing: border-box;
+    font-family: king-basil-lite;
+    font-size: 32px;
+    text-align: center;
+    overflow: hidden; }
+    nav .n1 p {
+      height: 100%;
+      width: 100%;
+      position: relative; }
+      nav .n1 p i {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); }
+  nav .n2 * {
+    display: none; }
+  nav .n2 input, nav .n2 select {
+    height: 100%;
+    box-sizing: border-box; }
+  nav .n3 {
+    box-sizing: border-box;
+    font-family: hero-light;
+    font-size: 20px;
+    line-height: 42px;
+    text-align: center; }
+
+.s-n {
+  background-color: #ffffff;
+  border-bottom: 1px solid #cccccc;
+  color: #333333; }
+  .s-n .n2 * {
+    display: initial; }
+
+.s-a {
+  display: grid;
+  grid-template-columns: 200px 1fr; }
+  .s-a .a1 {
+    border-right: 1px solid #cccccc; }
+    .s-a .a1 .a1-1 .title {
+      font-size: 1.5em;
+      padding: 10px; }
+  .s-a .a2 {
+    width: 100%;
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-auto-rows: minmax(150px, auto);
+    background-color: #ebebf9; }
+
+.p-a {
+  display: grid;
+  grid-template-columns: 200px 1fr; }
+  .p-a .a1 {
+    padding: 0px 5px; }
+    .p-a .a1 .a1-1 {
+      position: relative; }
+      .p-a .a1 .a1-1 .a1-1-1 {
+        position: relative;
+        padding: 20px 0px; }
+        .p-a .a1 .a1-1 .a1-1-1 .avatar {
+          margin: auto; }
+  .p-a .a2 {
+    width: 100%; }
+
+.elementContain {
+  box-sizing: border-box;
+  width: 100%;
+  height: 350px;
+  flex: 1 1 300px; }
+
+.a .buttonContain {
+  padding: 0px 24px; }
+.a .mapButton .buttonContain {
+  left: 100%;
+  top: 0%;
+  transform: translate(-100%, -100%); }
+.a .button01 {
+  height: 48px;
+  font-family: hero-light;
+  font-size: 32px;
+  line-height: 48px; }
+  .a .button01 .edge::before {
+    border-width: 1px; }
+  .a .button01 .edge {
+    position: absolute;
+    height: 33.9408px;
+    width: 33.9408px; }
+
+.avatarSmall {
+  width: 42px;
+  height: 42px; }
+  .avatarSmall .frame {
+    width: 64.7106781%;
+    height: 64.7106781%; }
+    .avatarSmall .frame::before {
+      border-width: 100px; }
+    .avatarSmall .frame::after {
+      border-width: 2px;
+      outline-width: 100px;
+      outline-offset: 1px; }
+
+.avatarLarge {
+  width: 150px;
+  height: 150px; }
+  .avatarLarge .frame {
+    width: 67.7106781%;
+    height: 67.7106781%; }
+    .avatarLarge .frame::before {
+      border-width: 100px; }
+    .avatarLarge .frame::after {
+      border-width: 8px;
+      outline-width: 100px;
+      outline-offset: 2px; }
+
+/*# sourceMappingURL=poliaStyle.css.map */
