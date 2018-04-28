@@ -1,0 +1,135 @@
+body {
+  font-family: "Courier New", Courier, monospace;
+  margin: 0px;
+  background-color: #232123;
+  font-size: 0.8em;
+}
+
+.keyboard {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 1px);
+  max-width: 1366px;
+  min-height: 200px;
+  user-select: none;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.keyboard-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow-y: visible;
+}
+.keyboard-container-white {
+  position: relative;
+  width: 100%;
+  overflow-y: visible;
+}
+.keyboard-container-black {
+  flex: none;
+  position: relative;
+  height: 50%;
+  width: 0px;
+  overflow: visible;
+  z-index: 10;
+}
+
+.button-reset {
+  background-color: #fff;
+  border: 1px solid #888;
+}
+.keyboard__button {
+  height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0px 5px 6px -2px rgba(0, 0, 0, 0.8);
+  transition: height 0.5s, box-shadow 0.5s, border 0.5s;
+}
+.keyboard__button::before{
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  top: 0px;
+  left: 0;
+  z-index: 0;
+  transition: all 5s;
+}
+.keyboard__button.pressed::before{
+  box-shadow: 0px -10px 20px -2px #00ccff;
+  transition: all 0.1s;
+  /* background: linear-gradient(rgba(0,0,0,0),#00ccff); */
+}
+.keyboard__button > p {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.keyboard-container-white .keyboard__button {
+  border-bottom: 3px solid #888;
+}
+.keyboard-container-black .keyboard__button {
+  background-color: #000;
+  color: #fff;
+  width: 100px;
+  max-width: calc((100vw / 36) - 4px);
+  min-width: 1em;
+  position: absolute;
+  transform: translateX(-50%);
+  /* border-radius: 0px 4px 4px 0px; */
+  border-bottom: 5px solid #444; 
+  border-left: 2px solid #444; 
+}
+.keyboard-container-white .keyboard__button:hover {
+  background-color: #ccc;
+}
+.keyboard-container-black .keyboard__button:hover {
+  background-color: #333;
+}
+
+.pressed {
+  /* height: calc(100% - 1px); */
+  box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.8);
+  border: 1px solid #444;
+}
+
+.keyboard-container-white .pressed {
+  background-color: #0088ff;
+  border-bottom: 1px solid #333 !important; 
+}
+.keyboard-container-black .pressed {
+  background-color: #0077cc;
+  border-left: 1px solid #333 !important; 
+  border-bottom: 3px solid #333 !important; 
+}
+
+.display__mode{
+  
+}
+
+.display__title {
+  display: inline-block;
+  height: 100%;
+  width: 100vw;
+  text-align: center;
+  font-family: 'Pacifico', cursive;
+  font-size: 5em;
+  color: #fff;
+}
+#display__title__note.off {
+  transition: all 5s;
+}
+#display__title__note.show {
+  text-shadow: 0px 0px 100px #0ff;
+  transition: all 3s;
+}

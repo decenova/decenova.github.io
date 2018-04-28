@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Piano</title>
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+
+  <script src="jquery.min.js"></script>
+  <script type="text/javascript" src="piano.js"></script>
+  <script type="text/javascript" src="data.js"></script>
+  <script async type="text/javascript" src="keyboard.js"></script>
+</head>
+
+<body>
+  <div class="display-header">
+    <div class="display-mode-container">
+      <div class="display__title">
+        <h1 id="display__title__note">Decen piano</h1>
+      </div>
+      <div class="display__title">
+          <h1 id="display__title__note">Decen piano</h1>
+        </div>
+    </div>
+  </div>
+  <div class="keyboard" id="keyboard"></div>
+  <div id="input"></div>
+  <div id="audio" onerror="location.reload()"></div>
+  <script src="render.js"></script>
+</body>
+
+</html>
