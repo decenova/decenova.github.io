@@ -15,6 +15,7 @@ document.onkeydown = function(n) {
       playNote("a" + note);
     }
     $(`#key-${id}`).addClass("pressed");
+    $(`#keyboard${t}`).addClass("pressed");
     $(`#display__title__note`).removeClass('off').addClass("show");
   }
 };
@@ -23,6 +24,7 @@ document.onkeyup = function(n) {
   let note = data.get(t);
   if (note && holdingNote.has(note)) {
     $(`#key-${holdingNote.get(note)}`).removeClass("pressed");
+    $(`#keyboard${t}`).removeClass("pressed");
     holdingNote.delete(note);
   }
   if (holdingNote.size <= 0)

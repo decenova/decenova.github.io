@@ -11,8 +11,9 @@ body {
   bottom: 0;
   left: 0;
   width: calc(100% - 1px);
-  max-width: 1366px;
+  max-width: 100%;
   min-height: 200px;
+  height: 25vh;
   user-select: none;
   overflow-x: visible;
   overflow-y: visible;
@@ -55,7 +56,7 @@ body {
   box-shadow: 0px 5px 6px -2px rgba(0, 0, 0, 0.8);
   transition: height 0.5s, box-shadow 0.5s, border 0.5s;
 }
-.keyboard__button::before{
+.keyboard__button::before {
   content: " ";
   position: absolute;
   width: 100%;
@@ -65,7 +66,7 @@ body {
   z-index: 0;
   transition: all 5s;
 }
-.keyboard__button.pressed::before{
+.keyboard__button.pressed::before {
   box-shadow: 0px -10px 20px -2px #00ccff;
   transition: all 0.1s;
   /* background: linear-gradient(rgba(0,0,0,0),#00ccff); */
@@ -87,8 +88,8 @@ body {
   position: absolute;
   transform: translateX(-50%);
   /* border-radius: 0px 4px 4px 0px; */
-  border-bottom: 5px solid #444; 
-  border-left: 2px solid #444; 
+  border-bottom: 5px solid #444;
+  border-left: 2px solid #444;
 }
 .keyboard-container-white .keyboard__button:hover {
   background-color: #ccc;
@@ -105,24 +106,41 @@ body {
 
 .keyboard-container-white .pressed {
   background-color: #0088ff;
-  border-bottom: 1px solid #333 !important; 
+  border-bottom: 1px solid #333 !important;
 }
 .keyboard-container-black .pressed {
   background-color: #0077cc;
-  border-left: 1px solid #333 !important; 
-  border-bottom: 3px solid #333 !important; 
+  border-left: 1px solid #333 !important;
+  border-bottom: 3px solid #333 !important;
 }
 
-.display__mode{
-  
+.slide-show {
+  position: relative;
+  width: 100vw;
+  max-height: calc(100vh - 200px);
+  height: 100vh;
+  overflow: hidden;
+}
+.slide-container {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  align-items: stretch;
+  position: absolute;
+  width: 200vw;
+  height: 100%;
+  overflow: hidden;
+  transform: translateX(-50%);
+}
+.display__mode {
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .display__title {
-  display: inline-block;
-  height: 100%;
-  width: 100vw;
   text-align: center;
-  font-family: 'Pacifico', cursive;
+  font-family: "Pacifico", cursive;
   font-size: 5em;
   color: #fff;
 }
@@ -132,4 +150,167 @@ body {
 #display__title__note.show {
   text-shadow: 0px 0px 100px #0ff;
   transition: all 3s;
+}
+
+/* .display__keyboard img {
+  max-height: 100%;
+  max-width: 100%;
+} */
+.display__keyboard {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+.display__keyboard-container{
+  overflow: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+#display_keyboard {
+  min-width: calc(22 * 48px + 23 * 5px);
+  max-width: calc(22 * 48px + 27 * 5px);
+  display: flex;
+  justify-content: space-between;
+}
+#left_key {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  width: calc(15 * 48px + 14 * 5px);
+  height: calc(5 * 48px + 4 * 5px);
+}
+#left_key > div {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+}
+.display__keyboard__button {
+  min-width: 48px;
+  min-height: 48px;
+  background-color: #90CAF9;
+}
+.display__keyboard__button.pressed {
+  background-color: #FF7043;
+}
+.display__keyboard__button>span:last-child{
+  display: none;
+}
+.display__keyboard__button:hover>span:first-child{
+  display: none;
+}
+.display__keyboard__button:hover>span:last-child{
+  display: initial;
+}
+.display__keyboard__button:hover {
+  background-color: #E3F2FD;
+}
+.display__keyboard__button:focus {
+  background-color: #2196F3;
+}
+.display__keyboard__button:disabled {
+  background-color: #CFD8DC;
+}
+.display__keyboard__button_8 {
+  min-width: calc(2 * 48px + 1 * 5px);
+}
+.display__keyboard__button_9 {
+  min-width: calc(1.5 * 48px);
+}
+.display__keyboard__button_220 {
+  min-width: calc(1.5 * 48px);
+}
+.display__keyboard__button_20 {
+  min-width: calc(1.5 * 48px + 5px);
+}
+#left_key .display__keyboard__button_0 {
+  min-width: calc(2.5 * 48px);
+}
+.display__keyboard__button_16:first-child {
+  min-width: calc(2 * 48px + 2 * 5px);
+}
+
+.display__keyboard__button_16:last-child {
+  min-width: calc(3 * 48px + 2 * 5px);
+}
+.display__keyboard__button_32 {
+  min-width: calc(6 * 48px + 5 * 5px);
+}
+.display__keyboard__button_17:first-child {
+  min-width: calc(2 * 48px + 2 * 5px);
+}
+.display__keyboard__button_17:last-child {
+  min-width: calc(3 * 48px + 2 * 5px);
+}
+
+#home_arrow_key {
+  width: calc(3 * 48px + 2 * 5px);
+  height: calc(5 * 48px + 4 * 5px);
+}
+#home_arrow_key .display__keyboard__button {
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+}
+#home_arrow_key>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+}
+.display__keyboard__button-hiden{
+  opacity: 0!important;
+}
+
+#numpad_key {
+  width: calc(4 * 48px + 3 * 5px);
+  height: calc(5 * 48px + 4 * 5px);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: space-between;
+}
+#numpad_key .display__keyboard__button {
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+}
+#num_key>div {
+  width: calc(3 * 48px + 2 * 5px);
+  height: calc(5 * 48px + 4 * 5px);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: space-between;
+  flex-wrap: wrap;
+}
+#sign_key>div {
+  width: calc(1 * 48px);
+  height: calc(5 * 48px + 4 * 5px);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: space-between;
+  flex-wrap: wrap;
+}
+
+.display__keyboard__button_96 {
+  min-width: calc(2 * 48px + 1 * 5px);
+}
+
+
+#sign_key .display__keyboard__button_107,#sign_key .display__keyboard__button_13 {
+  min-height: calc(2 * 48px + 1 * 5px);
+}
+
+.slide-button{
+  background-color: transparent;
+  font-size: 3em;
+  color: #fff;
 }
